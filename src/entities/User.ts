@@ -1,4 +1,4 @@
-import { IsEmail, Length, Min } from 'class-validator';
+import { IsEmail, Length } from 'class-validator';
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, Index, CreateDateColumn, UpdateDateColumn, BeforeInsert} from 'typeorm';
 import bcrypt from 'bcrypt';
 import {Exclude, classToPlain} from 'class-transformer';
