@@ -1,51 +1,51 @@
-import {Request, Response, Router} from 'express';
-import {validate, isEmpty} from 'class-validator';
+import { Request, Response, Router } from 'express';
+import { validate, isEmpty } from 'class-validator';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import cookie from 'cookie';
 
-import { User } from '../entities/User';
+import User from '../entities/User';
 import auth from '../middleware/auth';
 
-const register = async (req:Request, res: Response) => {
-    const {email, username, password} = req.body;
-    try{
+const register = async (req: Request, res: Response) => {
+    const { email, username, password } = req.body;
+    try {
         let errors: any = {}
-        const emailUser = await User.findOne({email});
-        const usernameUser = await User.findOne({username});
-        if(emailUser) errors.email = "Email is already in use";
-        if(usernameUser) errors.username = "Username is already taken";
-        if(Object.keys(errors).length > 0)
-            return res.status(400).json({errors});
-        const user = new User({email, username, password}); 
+        const emailUser = await User.findOne({ email });
+        const usernameUser = await User.findOne({ username });
+        if (emailUser) errors.email = "Email is already in use";
+        if (usernameUser) errors.username = "Username is already taken";
+        if (Object.keys(errors).length > 0)
+            return res.status(400).json({ errors });
+        const user = new User({ email, username, password });
         errors = await validate(user);
-        if(errors.length > 0)
-            return res.status(400).json({errors})
+        if (errors.length > 0)
+            return res.status(400).json({ errors })
         await user.save();
         return res.json(user);
-    }catch(err) {
+    } catch (err) {
         console.log(err);
         res.status(500).json(err)
     }
 }
 
-const login = async (req: Request, res:Response) => {
-    const {username, password} = req.body;
-    try{
+const login = async (req: Request, res: Response) => {
+    const { username, password } = req.body;
+    try {
         let errors: any = {};
-        
-        if(isEmpty(username)) errors.username = "Username must not be empty";
-        if(isEmpty(password)) errors.password = "Password must not be empty";
-        if(Object.keys(errors).length > 0) return res.status(400).json({errors});
-        const user = await User.findOne({username});
-        if(!user) {
-            return res.status(400).json({error: "User not found"})
+
+        if (isEmpty(username)) errors.username = "Username must not be empty";
+        if (isEmpty(password)) errors.password = "Password must not be empty";
+        if (Object.keys(errors).length > 0) return res.status(400).json({ errors });
+        const user = await User.findOne({ username });
+        if (!user) {
+            return res.status(400).json({ error: "User not found" })
         }
         const passwordMatches = await bcrypt.compare(password, user.password);
-        if(!passwordMatches){
-            return res.status(401).json({password: "Password is incorrect"})
+        if (!passwordMatches) {
+            return res.status(401).json({ password: "Password is incorrect" })
         }
-        const token = jwt.sign({username}, process.env.JWT_SECRET);
+        const token = jwt.sign({ username }, process.env.JWT_SECRET);
         //? Setting up the cookie
         let x: string = process.env.NODE_ENV;
         console.log(x);
@@ -61,12 +61,12 @@ const login = async (req: Request, res:Response) => {
         )
 
         return res.json(user);
-    }catch(err) {
+    } catch (err) {
         return res.status(500).json(err);
     }
 }
 
-const me = async (_:Request, res: Response) => {
+const me = async (_: Request, res: Response) => {
     return res.json(res.locals.user);
 }
 
@@ -82,13 +82,13 @@ const logout = (_: Request, res: Response) => {
             path: '/'
         })
     )
-    return res.status(200).json({success: true});
+    return res.status(200).json({ success: true });
 }
 
 const router = Router();
 router.post('/register', register);
 router.post('/login', login);
-router.get('/me',auth, me);
-router.get('/logout',auth, logout);
+router.get('/me', auth, me);
+router.get('/logout', auth, logout);
 
 export default router;
