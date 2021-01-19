@@ -1,4 +1,4 @@
-import { Request, Response, Router } from 'express'
+import { Request, Response, Router } from 'express';
 import { isEmpty } from 'class-validator'
 import { getRepository } from 'typeorm'
 

@@ -7,14 +7,16 @@
          "ES2016"
       ],
       "target": "es5",
-      "typeRoots": ["node_modules/@types"],
+      "typeRoots": [
+         "node_modules/@types"
+      ],
       "module": "commonjs",
       "moduleResolution": "node",
       "outDir": "./build",
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
       "sourceMap": true,
+      // Additions
       "esModuleInterop": true,
-      },
-
+   },
 }
