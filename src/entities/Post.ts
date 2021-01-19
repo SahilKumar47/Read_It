@@ -1,6 +1,6 @@
 import { Entity as TOEntity, Column, Index, ManyToOne, JoinColumn, BeforeInsert, OneToMany } from 'typeorm';
 import { makeId, slugify } from '../utils/helpers';
-
+ 
 import Entity from './Entity';
 import Sub from './Sub';
 import User from './User';
@@ -46,5 +46,5 @@ export default class Post extends Entity {
         this.identifier = makeId(7);
         this.slug = slugify(this.title);
     }
-
+ 
 }
