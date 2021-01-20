@@ -1,19 +1,69 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import Link from "next/link";
 
 export default function Home() {
-    return (
-        <div className={styles.container}>
-            <Head>
-                <title>Create Next App</title>
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-
-            <main className={styles.main}>
-                <h1 className={styles.title}>
-                    Welcome to <a href="https://nextjs.org">Register page</a>
-                </h1>
-            </main>
+  return (
+    <div className="flex">
+      <Head>
+        <title>Register</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div
+        className="h-screen bg-center bg-cover w-36"
+        style={{
+          backgroundImage: "url('/images/bricks.jpg')",
+        }}
+      ></div>
+      <div className="flex flex-col justify-center pl-6">
+        <div className="w-72">
+          <h1 className="mb-2 text-lg">Sign Up</h1>
+          <p className="mb-10 text-xs">
+            By continuing, you agree to our User Agreement and Privacy Policy.
+          </p>
+          <form>
+            <div className="mb-6">
+              <input
+                type="checkbox"
+                className="mr-1 cursor-pointer"
+                id="agreement"
+              />
+              <label className="text-xs cursor-pointer" htmlFor="agreement">
+                I agree to get newsletters from Read It
+              </label>
+            </div>
+            <div className="mb-2">
+              <input
+                type="email"
+                className="w-full p-3 transition duration-200 border border-gray-300 rounded outline-none bg-gray-50 focus:bg-white hover:bg-white"
+                placeholder="Email"
+              />
+            </div>
+            <div className="mb-2">
+              <input
+                type="text"
+                className="w-full p-3 transition duration-200 border border-gray-300 rounded outline-none bg-gray-50 focus:bg-white hover:bg-white"
+                placeholder="Username"
+              />
+            </div>
+            <div className="mb-2">
+              <input
+                type="password"
+                className="w-full p-3 transition duration-200 border border-gray-300 rounded outline-none bg-gray-50 focus:bg-white hover:bg-white"
+                placeholder="Password"
+              />
+            </div>
+            <button className="w-full py-2 mb-4 text-xs font-bold text-white uppercase bg-blue-500 border-blue-500 rounded">
+              Sign Up
+            </button>
+          </form>
+          <small>
+            Already Signed up!
+            <Link href="/login">
+              <a className="ml-1 text-blue-500 uppercase">Log In</a>
+            </Link>
+          </small>
         </div>
-    )
+      </div>
+    </div>
+  );
 }
