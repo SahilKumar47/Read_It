@@ -26,7 +26,7 @@ const register = async (req: Request, res: Response) => {
     if (emailUser) errors.email = "Email is already in use";
     if (usernameUser) errors.username = "Username is already taken";
     if (Object.keys(errors).length > 0) {
-      return res.status(400).json({ errors });
+      return res.status(400).json(errors);
     }
     const user = new User({ email, username, password });
     errors = await validate(user);
@@ -66,7 +66,7 @@ const login = async (req: Request, res: Response) => {
       cookie.serialize("token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameState: "strict",
+        sameSite: "strict",
         maxAge: 3600,
         path: "/",
       })
@@ -88,7 +88,7 @@ const logout = (_: Request, res: Response) => {
     cookie.serialize("token", "", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameState: "strict",
+      sameSite: "strict",
       expires: new Date(0),
       path: "/",
     })
