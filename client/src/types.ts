@@ -2,8 +2,11 @@ export interface Post {
   identifier: string;
   title: string;
   slug: string;
-  createdAt: string;
+  createAt: string;
   subName: string;
   updatedAt: string;
-  body: string;
+  body?: string;
+  username: string;
+  //virtual fields
+  url: string;
 }
