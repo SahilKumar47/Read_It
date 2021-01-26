@@ -97,7 +97,6 @@ export default function Home() {
 }
 
 //server side rendering
-
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const res = await Axios.get("/posts");

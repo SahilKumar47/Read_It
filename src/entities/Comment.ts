@@ -1,40 +1,48 @@
-import { Column, Entity as TOEntity, ManyToOne, JoinColumn, BeforeInsert, Index } from 'typeorm';
+import {
+  Column,
+  Entity as TOEntity,
+  ManyToOne,
+  JoinColumn,
+  BeforeInsert,
+  Index,
+  OneToMany,
+} from "typeorm";
 
+import Entity from "./Entity";
+import Post from "./Post";
+import User from "./User";
 
-import Entity from './Entity';
-import Post from './Post';
-import User from './User'
+import { makeId } from "../utils/helpers";
+import Vote from "./Votes";
 
-
-import { makeId } from '../utils/helpers';
-
-@TOEntity('comments')
+@TOEntity("comments")
 export default class Comment extends Entity {
-    constructor(comment: Partial<Comment>) {
-        super();
-        Object.assign(this, comment);
-    }
-    @Index()
-    @Column()
-    identifier: string
+  constructor(comment: Partial<Comment>) {
+    super();
+    Object.assign(this, comment);
+  }
+  @Index()
+  @Column()
+  identifier: string;
 
-    @Column()
-    body: string
+  @Column()
+  body: string;
 
-    @Column()
-    username: string
+  @Column()
+  username: string;
 
-    @ManyToOne(() => User)
-    @JoinColumn({ name: "username", referencedColumnName: "username" })
-    user: User;
+  @ManyToOne(() => User)
+  @JoinColumn({ name: "username", referencedColumnName: "username" })
+  user: User;
 
-    @ManyToOne(() => Post, post => post.comments, { nullable: false })
-    post: Post;
+  @ManyToOne(() => Post, (post) => post.comments, { nullable: false })
+  post: Post;
 
+  @OneToMany(() => Vote, (vote) => vote.comment)
+  votes: Vote[];
 
-    @BeforeInsert()
-    makeIdAndSlug() {
-        this.identifier = makeId(8);
-    }
-
+  @BeforeInsert()
+  makeIdAndSlug() {
+    this.identifier = makeId(8);
+  }
 }
