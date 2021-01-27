@@ -6,7 +6,7 @@
    "password": "root",
    "database": "readit",
    "synchronize": false,
-   "logging": true,
+   "logging": false,
    "entities": [
       "src/entities/**/*.ts"
    ],
