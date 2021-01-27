@@ -51,6 +51,10 @@ const vote = async (req: Request, res: Response) => {
       { identifier, slug },
       { relations: ["comments", "comments.votes", "sub", "votes"] }
     );
+
+    post.setUserVote(user);
+    post.comments.forEach((c) => c.setUserVote(user));
+
     return res.json(post);
   } catch (err) {
     console.log(err);

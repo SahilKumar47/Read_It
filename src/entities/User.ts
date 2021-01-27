@@ -1,45 +1,49 @@
-import { IsEmail, Length } from 'class-validator'
+import { IsEmail, Length } from "class-validator";
 import {
-    Entity as TOEntity,
-    Column,
-    Index,
-    BeforeInsert,
-    OneToMany,
-} from 'typeorm'
-import bcrypt from 'bcrypt'
-import { Exclude } from 'class-transformer'
+  Entity as TOEntity,
+  Column,
+  Index,
+  BeforeInsert,
+  OneToMany,
+} from "typeorm";
+import bcrypt from "bcrypt";
+import { Exclude } from "class-transformer";
 
-import Entity from './Entity'
-import Post from './Post'
+import Entity from "./Entity";
+import Post from "./Post";
+import Vote from "./Votes";
 
-@TOEntity('users')
+@TOEntity("users")
 export default class User extends Entity {
-    constructor(user: Partial<User>) {
-        super()
-        Object.assign(this, user)
-    }
+  constructor(user: Partial<User>) {
+    super();
+    Object.assign(this, user);
+  }
 
-    @Index()
-    @IsEmail(undefined, {message: "Must be a valid email address"})
-    @Length(1, 255, { message: 'Email is empty' })
-    @Column()
-    email: string
+  @Index()
+  @IsEmail(undefined, { message: "Must be a valid email address" })
+  @Length(1, 255, { message: "Email is empty" })
+  @Column()
+  email: string;
 
-    @Index()
-    @Length(3, 255, { message: 'Must be at least 3 characters long' })
-    @Column()
-    username: string
+  @Index()
+  @Length(3, 255, { message: "Must be at least 3 characters long" })
+  @Column()
+  username: string;
 
-    @Exclude()
-    @Column()
-    @Length(6, 255, { message: 'Must be at least 6 characters long' })
-    password: string
+  @Exclude()
+  @Column()
+  @Length(6, 255, { message: "Must be at least 6 characters long" })
+  password: string;
 
-    @OneToMany(() => Post, (post) => post.user)
-    posts: Post[]
+  @OneToMany(() => Post, (post) => post.user)
+  posts: Post[];
 
-    @BeforeInsert()
-    async hashPassword() {
-        this.password = await bcrypt.hash(this.password, 6)
-    }
+  @OneToMany(() => Vote, (vote) => vote.user)
+  votes: Vote[];
+
+  @BeforeInsert()
+  async hashPassword() {
+    this.password = await bcrypt.hash(this.password, 6);
+  }
 }
