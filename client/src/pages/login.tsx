@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 
 import InputGroup from "../components/inputGroup";
 
-export default function Register() {
+export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<any>({});

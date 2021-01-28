@@ -13,7 +13,7 @@ import Entity from "./Entity";
 import Sub from "./Sub";
 import User from "./User";
 import Comment from "./Comment";
-import { Expose } from "class-transformer";
+import { Exclude, Expose } from "class-transformer";
 import Vote from "./Votes";
 
 @TOEntity("posts")
@@ -51,9 +51,11 @@ export default class Post extends Entity {
   @JoinColumn({ name: "subName", referencedColumnName: "name" })
   sub: Sub;
 
+  @Exclude()
   @OneToMany(() => Comment, (comment) => comment.post)
   comments: Comment[];
 
+  @Exclude()
   @OneToMany(() => Vote, (vote) => vote.post)
   votes: Vote[];
 
