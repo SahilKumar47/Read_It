@@ -18,7 +18,6 @@ const Navbar: React.FC = () => {
         console.log(err);
       });
   };
-  console.log(loading);
 
   return (
     <div className="fixed inset-x-0 top-0 z-10 flex items-center justify-center h-12 px-5 bg-white">

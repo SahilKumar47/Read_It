@@ -4,7 +4,7 @@ import Link from "next/link";
 import Axios from "axios";
 import { useRouter } from "next/router";
 
-import { useAuthDispatch } from "../context/auth";
+import { useAuthDispatch, useAuthState } from "../context/auth";
 import InputGroup from "../components/inputGroup";
 
 export default function Login() {
@@ -13,8 +13,10 @@ export default function Login() {
   const [errors, setErrors] = useState<any>({});
 
   const dispatch = useAuthDispatch();
+  const { authenticated } = useAuthState();
 
   const router = useRouter();
+  if (authenticated) router.push("/");
 
   const submitForm = async (event: FormEvent) => {
     event.preventDefault();
