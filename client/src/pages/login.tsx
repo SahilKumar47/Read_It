@@ -4,12 +4,15 @@ import Link from "next/link";
 import Axios from "axios";
 import { useRouter } from "next/router";
 
+import { useAuthDispatch } from "../context/auth";
 import InputGroup from "../components/inputGroup";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<any>({});
+
+  const dispatch = useAuthDispatch();
 
   const router = useRouter();
 
@@ -20,6 +23,7 @@ export default function Login() {
         password,
         username,
       });
+      dispatch("LOGIN", res.data);
       router.push("/");
     } catch (err) {
       setErrors(err.response.data);
