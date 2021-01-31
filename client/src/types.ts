@@ -2,7 +2,7 @@ export interface Post {
   identifier: string;
   title: string;
   slug: string;
-  createAt: string;
+  createdAt: string;
   subName: string;
   updatedAt: string;
   body?: string;

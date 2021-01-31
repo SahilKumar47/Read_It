@@ -24,7 +24,7 @@ dayjs.extend(relativeTime);
 export default function PostCard({
   post: {
     identifier,
-    createAt,
+    createdAt,
     subName,
     title,
     url,
@@ -97,7 +97,7 @@ export default function PostCard({
             </Link>
             <Link href={url}>
               <a className="mx-1 hover:underline">
-                {dayjs(createAt).fromNow()}
+                {dayjs(createdAt).fromNow()}
               </a>
             </Link>
           </p>
