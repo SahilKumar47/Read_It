@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <SWRConfig
       value={{
         fetcher,
-        dedupingInterval: 10000,
+        dedupingInterval: 1000,
       }}
     >
       <AuthProvider>
