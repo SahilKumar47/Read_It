@@ -36,7 +36,7 @@ export default function PostCard({
     slug,
   },
 }: PostCardProps) {
-  const vote = (value) => {
+  const vote = (value: number) => {
     try {
       const res = Axios.post("/misc/vote", {
         identifier,
@@ -92,8 +92,8 @@ export default function PostCard({
           </Link>
           <p className="text-xs text-gray-500">
             <span className="mx-1">•</span> Posted by
-            <Link href={`u/${username}`}>
-              <a className="mx-1 hover:underline">{`u/${username}`}</a>
+            <Link href={`/u/${username}`}>
+              <a className="mx-1 hover:underline">{`/u/${username}`}</a>
             </Link>
             <Link href={url}>
               <a className="mx-1 hover:underline">
