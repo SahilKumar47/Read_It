@@ -11,6 +11,7 @@ import classNames from "classnames";
 import Sidebar from "../../../../components/Sidebar";
 import { Post } from "../../../../types";
 import { useAuthState } from "../../../../context/auth";
+import ActionButton from "../../../../components/ActionButton";
 dayjs.extend(relativeTime);
 
 export default function PostPage() {
@@ -117,6 +118,27 @@ export default function PostPage() {
                   <h1 className="my-1 text-xl font-medium">{post.title}</h1>
                   {/* {Post body} */}
                   <p className="my-3 text-sm">{post.body}</p>
+                  {/* {Action Buttons} */}
+                  <div className="flex">
+                    <Link href={`/${post.url}`}>
+                      <a>
+                        <ActionButton>
+                          <i className="mr-1 fas fa-comment-alt fa-xs"></i>
+                          <span className="font-bold">
+                            {post.commentCount} comments
+                          </span>
+                        </ActionButton>
+                      </a>
+                    </Link>
+                    <ActionButton>
+                      <i className="mr-1 fas fa-share fa-xs"></i>
+                      <span className="font-bold">Share</span>
+                    </ActionButton>
+                    <ActionButton>
+                      <i className="mr-1 fas fa-bookmark fa-xs"></i>
+                      <span className="font-bold">Save</span>
+                    </ActionButton>
+                  </div>
                 </div>
               </div>
             )}
