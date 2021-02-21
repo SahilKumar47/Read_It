@@ -71,13 +71,13 @@ export default function PostCard({
       {/* {data section} */}
       <div className="w-full p-2">
         <div className="flex items-center">
-          <Link href={`r/${subName}`}>
+          <Link href={`/r/${subName}`}>
             <img
               src="https://www.lakshyaskills.com/wp-content/uploads/2018/08/default-gravatar.png"
               className="w-6 h-6 mr-1 rounded-full cursor-pointer"
             />
           </Link>
-          <Link href={`r/${subName}`}>
+          <Link href={`/r/${subName}`}>
             <a className="text-xs font-bold cursor-pointer hover:underline">
               /r/{subName}
             </a>

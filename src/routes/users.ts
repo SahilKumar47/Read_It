@@ -25,12 +25,24 @@ const getUserSubmissions = async (req: Request, res: Response) => {
       posts.forEach((p) => p.setUserVote(res.locals.user));
       comments.forEach((c) => c.setUserVote(res.locals.user));
     }
+    let submissions: any[] = [];
+    posts.forEach((p) => submissions.push({ type: "Post", ...p.toJSON() }));
+    comments.forEach((c) =>
+      submissions.push({ type: "Comment", ...c.toJSON() })
+    );
+    submissions.sort((a, b) => {
+      if (b.createdAt > a.createdAt) return 1;
+      if (b.createdAt < a.createdAt) return -1;
+      return 0;
+    });
+    return res.json({ user, submissions });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ error: err });
+    return res.status(500).json({ error: "Something went wrong" });
   }
 };
 
 const router = Router();
 
 router.get("/:username", user, getUserSubmissions);
+export default router;
