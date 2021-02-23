@@ -87,19 +87,19 @@ export default function PostCard({
             <Link href={`/u/${username}`}>
               <a className="mx-1 hover:underline">{`/u/${username}`}</a>
             </Link>
-            <Link href={url}>
+            <Link href={`/${url}`}>
               <a className="mx-1 hover:underline">
                 {dayjs(createdAt).fromNow()}
               </a>
             </Link>
           </p>
         </div>
-        <Link href={url}>
+        <Link href={`/${url}`}>
           <a className="my-1 text-lg font-medium">{title}</a>
         </Link>
         {body && <p className="my-1 text-sm">{body}</p>}
         <div className="flex">
-          <Link href={url}>
+          <Link href={`/${url}`}>
             <a>
               <ActionButton>
                 <i className="mr-1 fas fa-comment-alt fa-xs"></i>
