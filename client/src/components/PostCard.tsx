@@ -8,6 +8,7 @@ import { Post } from "../types";
 import ActionButton from "./ActionButton";
 import { useAuthState } from "../context/auth";
 import { useRouter } from "next/router";
+import { isIn } from "class-validator";
 
 interface PostCardProps {
   post: Post;
@@ -29,12 +30,13 @@ export default function PostCard({
     userVote,
     voteScore,
     slug,
+    sub,
   },
   revalidate,
 }: PostCardProps) {
   const { authenticated } = useAuthState();
   const router = useRouter();
-
+  const isInSubPage = router.pathname === "/r/[sub]";
   const vote = async (value: number) => {
     if (!authenticated) {
       router.push("/login");
@@ -86,19 +88,24 @@ export default function PostCard({
       {/* {data section} */}
       <div className="w-full p-2">
         <div className="flex items-center">
-          <Link href={`/r/${subName}`}>
-            <img
-              src="https://www.lakshyaskills.com/wp-content/uploads/2018/08/default-gravatar.png"
-              className="w-6 h-6 mr-1 rounded-full cursor-pointer"
-            />
-          </Link>
-          <Link href={`/r/${subName}`}>
-            <a className="text-xs font-bold cursor-pointer hover:underline">
-              /r/{subName}
-            </a>
-          </Link>
+          {!isInSubPage && (
+            <>
+              <Link href={`/r/${subName}`}>
+                <img
+                  src={sub.imageUrl}
+                  className="w-6 h-6 mr-1 rounded-full cursor-pointer"
+                />
+              </Link>
+              <Link href={`/r/${subName}`}>
+                <a className="text-xs font-bold cursor-pointer hover:underline">
+                  /r/{subName}
+                </a>
+              </Link>
+              <span className="mx-1 text-xs text-gray-500">•</span>
+            </>
+          )}
           <p className="text-xs text-gray-500">
-            <span className="mx-1">•</span> Posted by
+            Posted by
             <Link href={`/u/${username}`}>
               <a className="mx-1 hover:underline">{`/u/${username}`}</a>
             </Link>
